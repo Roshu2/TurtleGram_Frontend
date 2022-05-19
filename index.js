@@ -9,6 +9,9 @@ async function loadArticles(){
         const newArticle = document.createElement("li");
         newArticle.setAttribute("id", article._id)
         newArticle.innerText = article.title
+        
+        // this.id 가 이엘레멘트의 아이디값을 가져온다
+        newArticle.setAttribute("onclick", "articleDetail(this.id)") 
         article_list.appendChild(newArticle)
 
 
@@ -16,7 +19,28 @@ async function loadArticles(){
 
 }
 
+async function checkLogin() {
+    const name = await getName();
+    console.log(name)
+    const username= document.getElementById("username")
+    const loginoutButton = document.getElementById("loginout")
+    if(name){
+        username.innerText = name
+        loginoutButton.innerText = "로그아웃"
+        loginoutButton.setAttribute("onclick", "logout()")
+    }else{
+        username.innerText = "로그인해주세요"
+        loginoutButton.innerText = "로그인"
+        loginoutButton.setAttribute("onclick", "location.href='/login.html'")
+
+    }
 
 
-getName();
+
+
+}
+
+
+
+checkLogin();
 loadArticles();

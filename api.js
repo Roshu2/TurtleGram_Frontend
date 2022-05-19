@@ -9,7 +9,7 @@ async function handleSignin(){
         email : document.getElementById("floatingInput").value,
         password : document.getElementById("floatingPassword").value
     }
-    const response = await fetch(`${backend_base_url}/login`,{
+    const response = await fetch(`${backend_base_url}/signup`,{
         method:'POST',
         body:JSON.stringify(signupData)
     }
@@ -60,12 +60,25 @@ async function getName(){
 
     }
     )
-    response_json = await response.json()
 
-    const username = document.getElementById("username")
-    username.innerText = response_json.email
+    if (response.status == 200) {
+        response_json = await response.json()
+        console.log(response_json)
+        return response_json.email
+    }  
+    else{
+        return null
+    }
+    
+    
+    
+    
+    
+    
+    // const username = document.getElementById("username")
+    // username.innerText = response_json.email
 
-    // return response_json.email
+    // // return response_json.email
 }
 
 
@@ -105,4 +118,32 @@ async function getArticles(){
     // json형태로 받아온다
     response_json = await response.json()
     return response_json.articles
+}
+
+
+function logout(){
+    localStorage.removeItem("token")
+    window.location.replace(`${frontend_base_url}/`);
+}
+
+
+function articleDetail(article_id){
+    console.log(article_id)
+    //각 엘레멘트해당하는 각자의 페이지로 이동하게하는 url ? = 쿼리스트링
+    const url = `${frontend_base_url}/article_detail.html?id=${article_id}`
+    location.href = url
+
+
+
+}
+
+async function getArticleDetail(article_id){
+    const response = await fetch(`${backend_base_url}/article/${article_id}`,{
+        method: 'GET',
+    }
+    )
+    response_json = await response.json()
+    console.log(response_json)
+
+    return response_json.article
 }
