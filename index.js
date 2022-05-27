@@ -34,10 +34,6 @@ async function checkLogin() {
         loginoutButton.setAttribute("onclick", "location.href='/login.html'")
 
     }
-
-
-
-
 }
 
 
